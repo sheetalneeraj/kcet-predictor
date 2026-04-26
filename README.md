@@ -24,24 +24,7 @@ A free, open-source KCET (Karnataka CET) rank and seat predictor built with pure
 
 ## 🚀 Quick Start
 
-### Deploy on GitHub Pages (Easiest)
 
-1. Fork this repository
-2. Go to **Settings → Pages → Source: main branch / root**
-3. Your site is live at `https://yourusername.github.io/kcet-predictor`
-
-### Local Development
-
-```bash
-# Clone the repository
-git clone https://github.com/sheetalneeraj/kcet-predictor.git
-cd kcet-predictor
-
-# Open index.html in your browser
-# No build process required!
-```
-
----
 
 ## 📖 How It Works
 
