@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-brightgreen)](https://sheetalneeraj.github.io/kcet-predictor)
 
-A free, open-source KCET (Karnataka CET) rank and seat predictor built with pure HTML/CSS/JS — deployable as a GitHub Page with zero setup.
+A free, open-source KCET (Karnataka CET) rank and seat predictor built with pure HTML/CSS/JS
 
 🔗 **Live Demo**: [https://sheetalneeraj.github.io/kcet-predictor](https://sheetalneeraj.github.io/kcet-predictor)
 
