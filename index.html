@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KCET Predictor 2025 — Rank & Seat Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="container">
+      <div class="badge">Karnataka CET 2025</div>
+      <h1>KCET<br /><span class="accent">Rank & Seat</span><br />Predictor</h1>
+      <p class="subtitle">Predict your rank from marks, and discover colleges &amp; branches you can get — powered by 5 years of real KEA cutoff data.</p>
+      <div class="hero-pills">
+        <span>📊 2020–2024 Data</span>
+        <span>🏛️ 80+ Colleges</span>
+        <span>⚡ Instant Results</span>
+      </div>
+      <a href="#tools" class="cta-btn">Start Predicting ↓</a>
+    </div>
+  </header>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Enter your KCET + PUC marks</h3>
+          <p>KCET rank uses 50:50 weightage of KCET score (out of 180) and 2nd PUC PCM marks (out of 300, normalized to 90).</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Get your predicted rank</h3>
+          <p>We map your combined score against 5 years of marks-vs-rank trend data to give you a realistic rank range.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Discover your colleges</h3>
+          <p>Filter by category, branch preference, and college type. See opening & closing ranks to gauge your chances.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools" class="tools-section">
+    <div class="container">
+
+      <!-- TAB SWITCHER -->
+      <div class="tab-bar">
+        <button class="tab active" data-tab="rank">🎯 Rank Predictor</button>
+        <button class="tab" data-tab="seat">🏛️ College & Seat Finder</button>
+      </div>
+
+      <!-- RANK PREDICTOR TAB -->
+      <div id="tab-rank" class="tab-content active">
+        <div class="card">
+          <h2>Predict Your KCET Rank</h2>
+          <p class="card-desc">Enter your scores below. KCET rank = 50% KCET marks (out of 180) + 50% PUC PCM marks (out of 300 → scaled to 90).</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>KCET Score <span class="tag">out of 180</span></label>
+              <input type="number" id="kcet-score" min="0" max="180" placeholder="e.g. 135" />
+            </div>
+            <div class="form-group">
+              <label>2nd PUC PCM Marks <span class="tag">out of 300</span></label>
+              <input type="number" id="puc-marks" min="0" max="300" placeholder="e.g. 270" />
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="rank-category">
+                <option value="GM">General Merit (GM)</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="OBC">OBC (Cat-2A/2B/3A/3B)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Year Reference</label>
+              <select id="rank-year">
+                <option value="2024">2024 (Latest)</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="predict-btn" onclick="predictRank()">Predict My Rank →</button>
+
+          <div id="rank-result" class="result-box hidden">
+            <div class="result-inner">
+              <div class="result-label">Your Predicted Rank Range</div>
+              <div class="result-rank" id="rank-output">—</div>
+              <div class="result-sub" id="rank-sub"></div>
+              <div class="result-meta" id="rank-meta"></div>
+              <div class="progress-wrap">
+                <div class="progress-label-row">
+                  <span>Rank 1</span><span>1,00,000+</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="rank-bar"></div>
+                </div>
+              </div>
+              <button class="goto-seat-btn" onclick="goToSeat()">Find colleges for this rank →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MARKS VS RANK TABLE -->
+        <div class="card table-card">
+          <h3>KCET Marks vs Rank — Historical Reference</h3>
+          <p class="card-desc">Data from KEA official cutoffs &amp; reported trends (2020–2024). Combined score = KCET + PUC weighted.</p>
+          <div class="table-scroll">
+            <table class="data-table" id="mvr-table">
+              <thead>
+                <tr>
+                  <th>KCET Score</th>
+                  <th>Combined Score</th>
+                  <th>2024 Rank</th>
+                  <th>2023 Rank</th>
+                  <th>2022 Rank</th>
+                  <th>2021 Rank</th>
+                  <th>2020 Rank</th>
+                </tr>
+              </thead>
+              <tbody id="mvr-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEAT FINDER TAB -->
+      <div id="tab-seat" class="tab-content">
+        <div class="card">
+          <h2>Find Colleges & Branches</h2>
+          <p class="card-desc">Enter your rank and filters to see which colleges and branches you can get into, based on 5-year closing rank trends.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Your KCET Rank</label>
+              <input type="number" id="seat-rank" min="1" max="200000" placeholder="e.g. 2500" />
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="seat-category">
+                <option value="GM">General Merit (GM)</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="OBC">OBC</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Branch Preference</label>
+              <select id="seat-branch">
+                <option value="all">All Branches</option>
+                <option value="CS">Computer Science (CS)</option>
+                <option value="IS">Information Science (IS)</option>
+                <option value="EC">Electronics & Communication (EC)</option>
+                <option value="ME">Mechanical Engineering (ME)</option>
+                <option value="CE">Civil Engineering (CE)</option>
+                <option value="EE">Electrical Engineering (EE)</option>
+                <option value="AI">AI/ML & Data Science</option>
+                <option value="BT">Biotechnology (BT)</option>
+                <option value="CH">Chemical Engineering (CH)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>College Type</label>
+              <select id="seat-type">
+                <option value="all">All</option>
+                <option value="gov">Government</option>
+                <option value="aided">Government Aided</option>
+                <option value="private">Private Unaided</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label>Chance Filter</label>
+            <div class="chance-filter-row">
+              <label class="check-label"><input type="checkbox" id="chk-safe" checked /> ✅ Safe (closing rank &gt; your rank + 20%)</label>
+              <label class="check-label"><input type="checkbox" id="chk-moderate" checked /> ⚠️ Moderate (within 20%)</label>
+              <label class="check-label"><input type="checkbox" id="chk-reach" checked /> 🎯 Reach (closing rank &lt; your rank)</label>
+            </div>
+          </div>
+
+          <button class="predict-btn" onclick="findSeats()">Find Colleges →</button>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="seat-result" class="hidden">
+          <div class="result-summary" id="seat-summary"></div>
+          <div class="table-scroll">
+            <table class="data-table" id="seat-table">
+              <thead>
+                <tr>
+                  <th>College</th>
+                  <th>Type</th>
+                  <th>Branch</th>
+                  <th>2024 Closing</th>
+                  <th>2023 Closing</th>
+                  <th>2022 Closing</th>
+                  <th>Trend</th>
+                  <th>Chance</th>
+                </tr>
+              </thead>
+              <tbody id="seat-body"></tbody>
+            </table>
+          </div>
+          <p class="disclaimer">⚠️ Closing ranks shown are for General Merit (GM) category. SC/ST/OBC closing ranks are typically 3–8× higher (easier to get). Data sourced from KEA official PDFs and verified education portals. Always cross-check at <a href="https://cetonline.karnataka.gov.in" target="_blank">cetonline.karnataka.gov.in</a>.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DATA SOURCE NOTE -->
+  <section class="source-section">
+    <div class="container">
+      <h2 class="section-title">About the Data</h2>
+      <div class="source-grid">
+        <div class="source-card">
+          <div class="source-icon">📋</div>
+          <h4>Official KEA PDFs</h4>
+          <p>Round-wise cutoff PDFs published at cetonline.karnataka.gov.in after each counselling session for 2020–2024.</p>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">📰</div>
+          <h4>Verified Portals</h4>
+          <p>Cross-referenced with Careers360, Shiksha, CollegeDunia, and Sakshi Education for accuracy.</p>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">🔢</div>
+          <h4>50:50 Formula</h4>
+          <p>Rank computed as: (KCET/180×90) + (PUC/300×90) = Combined score out of 180. Higher = better rank.</p>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">🔄</div>
+          <h4>Update This Data</h4>
+          <p>Fork this project on GitHub and edit <code>data.js</code> with the latest KEA PDF data each year.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Built with ❤️ for KCET aspirants · Data: KEA official cutoffs 2020–2024</p>
+      <p class="footer-note">This tool is for reference only. Always verify with KEA official website before making admission decisions.</p>
+      <a href="https://cetonline.karnataka.gov.in" target="_blank" class="kea-link">Visit KEA Official Site →</a>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
